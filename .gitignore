@@ -1,0 +1,9 @@
+# IDE files:
+.vscode/
+.idea/
+
+# Production Test Files
+Testes.java
+
+#
+*.iml
