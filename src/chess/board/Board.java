@@ -41,10 +41,14 @@ public class Board {
 	}
 
 
-	public String getPieceName(int i, int j)
+	public Piece getPiece(int i, int j)
 	{
-		if (board[i][j].getPiece() != null)
-			return board[i][j].getPiece().getName();
+		return board[i][j].getPiece();
+	}
+
+	public String getPieceName(int i, int j){
+		if (getPiece(i, j) != null)
+			return getPiece(i, j).getName();
 		return null;
 	}
 	

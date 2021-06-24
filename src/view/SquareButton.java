@@ -1,11 +1,5 @@
-package view.panels;
+package view;
 
-import chess.StateMachineController;
-import chess.board.Board;
-import chess.board.pieces.Piece;
-import chess.state.MoveSelectionState;
-import chess.state.PieceMovementState;
-import chess.state.PieceSelectionState;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.Serial;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
-
 
 
 public class SquareButton extends JButton{
@@ -83,36 +76,34 @@ public class SquareButton extends JButton{
 			// Função disparada quando clicamos sobre um SquareButton:
 			System.out.println("Selected Square:  Row " + position[0] + " - Column "+ position[1]);
 
-			if (StateMachineController.instance.getCurrentState() instanceof PieceSelectionState ||
-				StateMachineController.instance.getCurrentState() instanceof MoveSelectionState){
+			if (Window.instance.chess.isPieceSelectionState() ||
+				Window.instance.chess.isMoveSelectionState()){
 					
 					// Se está no estado de MoveSelection e clicou em um highlight
-					if (Board.instance.getSquare(position[0], position[1]).getIsHighlighted()){
-						StateMachineController.instance.setSelectedHighlight(position[0], position[1]);
-						StateMachineController.instance.changeTo(new PieceMovementState());
+					if (Window.instance.chess.squareIsHighlighted(position[0], position[1])){
+						Window.instance.chess.setSelectedHighlight(position[0], position[1]);
+						Window.instance.chess.changeToPieceMovementState();
 					}
 					
-					// Se esta no stado de PieceSelection ou MoveSelection e clicou em uma peça
-					else if (Board.instance.getSquare(position[0], position[1]).getPiece() != null){
-						Piece selectedPiece = Board.instance.getSquare(position[0], position[1]).getPiece();
-						
+					// Se esta no estado de PieceSelection ou MoveSelection e clicou em uma peça
+					else if (Window.instance.chess.thereIsPiece(position[0], position[1])){
 						// Se esta peça esta sendo clicada pela segunda vez consecutiva, retira os highlights dela
-						if (selectedPiece  == StateMachineController.instance.getSelectedPiece()){
-							StateMachineController.instance.setSelectedPiece(null);
-							StateMachineController.instance.changeTo(new PieceSelectionState());
+						if (position  == Window.instance.chess.getSelectedPiecePosition()){
+							Window.instance.chess.setSelectedPiecePosition(null);
+							Window.instance.chess.changeToPieceSelectionState();
 						}
 						
 						// Se é uma nova peça sendo clicada, vai para o MoveSelectionState para adicionar os highlights
-						else if (selectedPiece != null && StateMachineController.instance.getCurrentPlayer() == selectedPiece.getPlayer()){
-							StateMachineController.instance.setSelectedPiece(selectedPiece);
-							StateMachineController.instance.changeTo(new MoveSelectionState());
+						else if (Window.instance.chess.isCurrentPlayerPiece(position[0], position[1])){
+							Window.instance.chess.setSelectedPiecePosition(position);
+							Window.instance.chess.changeToMoveSelectionState();
 						}
 					}
 					
 					// Se clicar em um square vazio, volta para o estado de seleção de peça e retira qualquer highlight que estivesse marcado
 					else{
-						StateMachineController.instance.setSelectedPiece(null);
-						StateMachineController.instance.changeTo(new PieceSelectionState());
+						Window.instance.chess.setSelectedPiecePosition(null);
+						Window.instance.chess.changeToPieceSelectionState();
 					}
 			}
 		}

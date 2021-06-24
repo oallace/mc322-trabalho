@@ -1,12 +1,12 @@
 package chess;
 
 
+import chess.board.Board;
 import chess.board.pieces.Piece;
 import chess.player.Player;
-import chess.state.State;
-import chess.state.TurnBeginState;
+import chess.state.*;
 
-public class StateMachineController {   // A máquina de estados controla o fluxo do jogo alternando entre os estados.
+public class StateMachineController implements IChess{   // A máquina de estados controla o fluxo do jogo alternando entre os estados.
 
     public static StateMachineController instance;  // Instancia estática para acessar o Controller através do Board e do View.
 
@@ -14,7 +14,7 @@ public class StateMachineController {   // A máquina de estados controla o flux
     private Player player2;
     private Player currentPlayer;
     private State currentState;
-    private Piece selectedPiece;      // Peça selecionada no estado PieceSelectionState
+    private Piece selectedPiece;    // Peça selecionada no estado PieceSelectionState
     private int[] selectedHighlight;  // Highlight selecionado no estado MoveSelectionState
 
 
@@ -44,16 +44,93 @@ public class StateMachineController {   // A máquina de estados controla o flux
         this.currentPlayer = player;
     }
 
-    public State getCurrentState() {
-        return this.currentState;
-    }
-
     public Piece getSelectedPiece() {
         return this.selectedPiece;
     }
 
-    public void setSelectedPiece(Piece piece) {
-        this.selectedPiece = piece;
+    @Override
+    public String getPlayerName(int playerNum) {
+        switch (playerNum){
+            case 1:
+                return player1.getName();
+            case 2:
+                return player2.getName();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public String getPieceName(int iPos, int jPos) {
+        return Board.instance.getPieceName(iPos, jPos);
+    }
+
+    @Override
+    public boolean squareIsHighlighted(int iPos, int jPos) {
+        return Board.instance.getSquare(iPos, jPos).getIsHighlighted();
+    }
+
+    @Override
+    public boolean thereIsPiece(int iPos, int jPos) {
+        if (Board.instance.getPiece(iPos, jPos) != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean isPieceSelectionState() {
+        if (currentState instanceof PieceSelectionState)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean isMoveSelectionState() {
+        if (currentState instanceof MoveSelectionState)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int[] getSelectedPiecePosition(){
+        if (getSelectedPiece() != null)
+            return getSelectedPiece().getSquare().getPosition();
+        else
+            return  null;
+    }
+
+    @Override
+    public boolean isCurrentPlayerPiece(int iPos, int jPos) {
+        return Board.instance.getPiece(iPos, jPos).getPlayer() == currentPlayer;
+    }
+
+    @Override
+    public void setSelectedPiecePosition(int[] piecePosition) {
+        if (piecePosition == null)
+        {
+            this.selectedPiece = null;
+        }
+        else
+        {
+            this.selectedPiece = Board.instance.getPiece(piecePosition[0], piecePosition[1]);
+        }
+    }
+
+    @Override
+    public void changeToPieceMovementState() {
+        changeTo(new PieceMovementState());
+    }
+
+    @Override
+    public void changeToPieceSelectionState() {
+        changeTo(new PieceSelectionState());
+    }
+
+    @Override
+    public void changeToMoveSelectionState() {
+        changeTo(new MoveSelectionState());
     }
 
     public int[] getSelectedHighlight() {

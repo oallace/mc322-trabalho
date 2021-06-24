@@ -1,6 +1,4 @@
-package view.panels;
-
-import view.Window;
+package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;

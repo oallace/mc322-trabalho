@@ -15,7 +15,7 @@ public class AppChess {
 		machine.changeTo(new LoadState());
 		
 		// View
-		Window window = new Window();
+		Window window = new Window(machine);
 		
 		machine.startGame();
 	}
