@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class EffectMachineController implements IManageEffects{
     Effect activeEffects[][];
     ArrayList<int[]> changes; // guarda mudanças que precisam ser informadas
-    public static EffectMachineController instance;
+    public static IManageEffects instance; // Interface para acesso global à componente
 
     public  EffectMachineController()
     {

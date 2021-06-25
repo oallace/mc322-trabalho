@@ -62,7 +62,7 @@ public class SquareButton extends JButton{
 		if (imagePath != null) {
 			ImageLabel newImage = new ImageLabel(imagePath, x, y, width, height);
 			this.add(newImage);
-			components[idx] = newImage; // 0 se refere à imagem da peça.
+			components[idx] = newImage;
 		}
 		SwingUtilities.updateComponentTreeUI(this);
 	}

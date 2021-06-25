@@ -24,7 +24,7 @@ public class AppChess {
 //		Testando efeitos:
 		effectsMachine.createWall(0, 1);
 		effectsMachine.passShift();
-		effectsMachine.createWall(0, 1);
+		effectsMachine.createWall(1, 1);
 		effectsMachine.freezeSquare(0, 2);
 		effectsMachine.passShift();
 
