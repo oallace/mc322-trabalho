@@ -26,7 +26,7 @@ public class SquareButton extends JButton{
 		position = new int[2];    // A posição será usada na clickFunction para obter as coordenadas do square clicado
 		position[0] = iPos;
 		position[1] = jPos;
-		components = new Component[2]; // 0 : peça   1 : highlight
+		components = new Component[3]; // 0 : peça   1 : highlight  2: efeito
 		addActionListener(new SquareButtonlHandler());
 
 		// Estilo do botão:

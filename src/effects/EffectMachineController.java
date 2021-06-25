@@ -1,11 +1,13 @@
 package effects;
 
-
 import view.Window;
+
+import java.util.ArrayList;
 
 public class EffectMachineController implements IManageEffects{
     Effect activeEffects[][];
-    Window window;  // mudar: fazer conexão por uma interface
+    ArrayList<int[]> changes; // guarda mudanças que precisam ser informadas
+    public static EffectMachineController instance;
 
     public  EffectMachineController()
     {
@@ -13,27 +15,26 @@ public class EffectMachineController implements IManageEffects{
         for (int i = 0; i < 8; i++)
             for (int j = 0; j < 8; j++)
                 activeEffects[i][j] = null;
-        window = null;
+        changes = new ArrayList<int[]>();
+        instance = this;
     }
 
-    public void connectWindow(Window window)
-    {
-        this.window = window;
-    }
 
     @Override
     public boolean freezeSquare(int iPos, int jPos) {
         if (activeEffects[iPos][jPos] == null)
         {
             activeEffects[iPos][jPos] = new FreezingEffect(iPos, jPos);
+            changes.add(activeEffects[iPos][jPos].getSquarePosition());
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean isFrozen(int iPos, int jPos) {
-        return false;
+    public boolean isFrozen(int iPos, int jPos)
+    {
+        return (activeEffects[iPos][jPos] instanceof FreezingEffect);
     }
 
     @Override
@@ -41,14 +42,23 @@ public class EffectMachineController implements IManageEffects{
         if (activeEffects[iPos][jPos] == null)
         {
             activeEffects[iPos][jPos] = new WallEffect(iPos, jPos);
+            changes.add(activeEffects[iPos][jPos].getSquarePosition());
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean isWall(int iPos, int jPos) {
-        return false;
+    public boolean isWall(int iPos, int jPos)
+    {
+        return (activeEffects[iPos][jPos] instanceof WallEffect);
+    }
+
+    @Override
+    public String getEffectName(int iPos, int jPos) {
+        if (activeEffects[iPos][jPos] != null)
+            return activeEffects[iPos][jPos].getName();
+        return null;
     }
 
     @Override
@@ -59,17 +69,15 @@ public class EffectMachineController implements IManageEffects{
             {
                 if(activeEffects[i][j] != null)
                     if(activeEffects[i][j].discountsShift()) //é true quando a duração do efeito termina
-                        removeRepresentation(i, j);
+                    {
+                        changes.add(activeEffects[i][j].getSquarePosition());
+                        activeEffects[i][j] = null;
+                    }
             }
-    }
 
-    @Override
-    public void createRepresentation(Effect e, int iSquarePos, int jSquarePos) {
-
-    }
-
-    @Override
-    public void removeRepresentation(int iSquarePos, int jSquarePos) {
+        for (int i = 0; i < changes.size(); i++)
+            Window.instance.actualizeSquareRepresentation(changes.get(i)[0], changes.get(i)[1], false);
+        changes.clear();
 
     }
 }

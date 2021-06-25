@@ -1,6 +1,7 @@
 package view;
 
 import chess.IChess;
+import effects.EffectMachineController;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -85,7 +86,18 @@ public class Window extends JFrame implements IRChess{
 		else{
 			squareButton.removeImage(1);
 		}
+
+		// Atualizações de efeitos
+		if(EffectMachineController.instance.getEffectName(iPos, jPos) != null)
+		{
+			squareButton.addImage(2, "./images/" + EffectMachineController.instance.getEffectName(iPos, jPos) + ".png",0, 0, 100, 100);
+		}
+		else
+		{
+			squareButton.removeImage(2);
+		}
 	}
+
 
 	@Override
 	public void connectChess(IChess chess) {

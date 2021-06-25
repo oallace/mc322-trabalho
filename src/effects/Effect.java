@@ -1,8 +1,9 @@
 package effects;
 
 public class Effect {
-    private int[] squarePosition; // posição do Square sob o efeito
-    private int duration; // quantos turnos há de duração
+    protected int[] squarePosition; // posição do Square sob o efeito
+    protected int duration; // quantos turnos há de duração
+    protected static String name = "default";
 
 
     public Effect(int iPos, int jPos, int duration){
@@ -11,6 +12,10 @@ public class Effect {
         squarePosition[1] = jPos;
         this.duration = duration;
     }
+
+    public int[] getSquarePosition(){return squarePosition;}
+
+    public String getName(){return name;}
 
     // desconta um turno de duração do efeito. Se a duração do efeito zerar, retorna True
     public boolean discountsShift(){
