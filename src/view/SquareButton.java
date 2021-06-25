@@ -27,7 +27,7 @@ public class SquareButton extends JButton{
 		position[0] = iPos;
 		position[1] = jPos;
 		components = new Component[3]; // 0 : peça   1 : highlight  2: efeito
-		addActionListener(new SquareButtonlHandler());
+		addActionListener(new SquareButtonHandler());
 
 		// Estilo do botão:
 		this.setBorderPainted(false);
@@ -69,7 +69,7 @@ public class SquareButton extends JButton{
 	
 
 	// Classe que será chamada ao clicar no JPanel.
-	private class SquareButtonlHandler implements ActionListener
+	private class SquareButtonHandler implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
