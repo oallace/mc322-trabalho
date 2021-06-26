@@ -66,3 +66,16 @@ Cada nação terá uma *Habilidade Básica* e uma *Habilidade Especial* que pode
 * Cada **Casa** modela uma casa da plataforma de xadrez e possui informações como a **Peça** que está sobre ela e o **Efeito** ao qual ela está submetida.  
 * A **Peça** modela as peças do jogo de xadrez e possui instâncias de **Movimento**, o qual controla os movimentos das peças.    
 * Por fim, **Efeito** é um modelo dos efeitos de habilidades do jogo.
+
+
+### Componente Effects
+> Componente que gere os efeitos do jogo: congelamento e muralha de pedras. Com ele podemos atribuir efeitos e fazer consultas sobre efeitos ativos.
+![Componete Efeitos](./assets/about/effects_component.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `effect.EffectMachineControl`
+Autores | `Wallace Gustavo Santos Lima`
+Interfaces | `IManageEffects` <br> `IAskEffects`
+
