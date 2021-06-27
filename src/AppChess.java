@@ -1,8 +1,5 @@
 import chess.StateMachineController;
 import chess.board.Board;
-import chess.player.nation.ISkill;
-import chess.player.nation.IceNation;
-import chess.player.nation.StoneNation;
 import chess.state.LoadState;
 import effects.EffectMachineController;
 import effects.IManageEffects;
@@ -16,7 +13,7 @@ public class AppChess {
 		Board board = new Board();
 		
 		// Controller
-		StateMachineController machine = new StateMachineController("Player1", "Player2");
+		StateMachineController machine = new StateMachineController();
 		machine.changeTo(new LoadState());
 
 		IManageEffects effectsMachine = new EffectMachineController();

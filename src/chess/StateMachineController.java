@@ -20,10 +20,10 @@ public class StateMachineController implements IChess{   // A máquina de estado
     private int[] selectedHighlight;  // Highlight selecionado no estado MoveSelectionState
 
 
-    public StateMachineController(String namePlayer1, String namePlayer2) {
+    public StateMachineController() {
         instance = this;
-        player1 = new Player("WhiteTeam", 0, namePlayer1, new IceNation());
-        player2 = new Player("BlackTeam", 0, namePlayer2, new StoneNation());
+        player1 = new Player("WhiteTeam", 0, "Player1", new IceNation());
+        player2 = new Player("BlackTeam", 0, "Player2", new StoneNation());
         currentState = null;
         selectedPiece = null;
         selectedHighlight = new int[2];
