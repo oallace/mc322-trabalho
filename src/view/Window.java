@@ -9,14 +9,14 @@ import java.io.Serial;
 import javax.swing.JFrame;
 
 
-public class Window extends JFrame implements IRChess{
+public class Window extends JFrame implements IManageRepresentation{
 	
 	@Serial
 	private static final long serialVersionUID = 7446721714968740806L;
 
-	public static Window instance;  // Instância estática para acesso.
+	public static IManageRepresentation instance;  // Para facilitar acesso externo.
 
-	IChess chess; // alterar visibilidade
+	IChess chess;
 
 	private final SquareButton[][] board;
 
@@ -56,6 +56,7 @@ public class Window extends JFrame implements IRChess{
 		this.board[iPos][jPos] = square;
 	}
 
+	@Override
 	// Atualiza a representação da peça, do highlight e dos efeitos, respectivamente, de um dado square do tabuleiro.
 	public void actualizeSquareRepresentation(int iPos, int jPos, boolean attPiece){
 		SquareButton squareButton = this.board[iPos][jPos];
@@ -96,11 +97,5 @@ public class Window extends JFrame implements IRChess{
 		{
 			squareButton.removeImage(2);
 		}
-	}
-
-
-	@Override
-	public void connectChess(IChess chess) {
-	this.chess = chess;
 	}
 }

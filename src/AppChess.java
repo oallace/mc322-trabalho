@@ -1,5 +1,8 @@
 import chess.StateMachineController;
 import chess.board.Board;
+import chess.player.nation.ISkill;
+import chess.player.nation.IceNation;
+import chess.player.nation.StoneNation;
 import chess.state.LoadState;
 import effects.EffectMachineController;
 import effects.IManageEffects;
@@ -24,8 +27,11 @@ public class AppChess {
 //		Testando efeitos:
 		effectsMachine.createWall(0, 1);
 		effectsMachine.passShift();
-		effectsMachine.createWall(1, 1);
-		effectsMachine.freezeSquare(0, 2);
+		ISkill stoneNation = new StoneNation();
+		stoneNation.basicSkill(5, 4);
+		stoneNation.mainSkill(4, 6);
+		ISkill iceNation = new IceNation();
+		iceNation.mainSkill(2,5);
 		effectsMachine.passShift();
 
 

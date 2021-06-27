@@ -7,6 +7,7 @@ import chess.board.Board;
 import chess.board.pieces.*;
 import chess.board.squares.Square;
 import chess.player.Player;
+import effects.EffectMachineController;
 
 import java.util.ArrayList;
 
@@ -27,14 +28,24 @@ public abstract class Movement {
     // Retorna uma lista com as posições de todos os movimentos possíveis em uma dada direção, para uma dada peça. O parametro "includeBlocked",
     //  sendo false, indica que ao encontrar uma peça inimiga deve-se interromper o movimento sem poder comer a peça (caso do peão).
     protected ArrayList<int[]> untilBlockedPath(Piece piece, int yDirection, int xDirection, boolean includeBlocked, int limit){
-        ArrayList<int[]> moves = new ArrayList<>(); 
+        ArrayList<int[]> moves = new ArrayList<>();
+
         Square currentSquare = piece.getSquare();
+
+        //       Checa se está congelado:
+        if (EffectMachineController.instance.isFrozen(currentSquare.getPosition()[0], currentSquare.getPosition()[1]))
+            return moves;
 
         while (currentSquare != null && moves.size() < limit){
             currentSquare = Board.instance.getSquare(currentSquare.getPosition()[0]+yDirection, currentSquare.getPosition()[1]+xDirection);
             
             if (currentSquare != null){
-                if (currentSquare.getPiece() == null){
+                // Checa se o caminho está bloqueado por uma muralha
+                if (EffectMachineController.instance.isWall(currentSquare.getPosition()[0], currentSquare.getPosition()[1]))
+                {
+                    return moves;
+                }
+                else if (currentSquare.getPiece() == null){
                     moves.add(currentSquare.getPosition());
                 }
 
