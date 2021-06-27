@@ -6,12 +6,18 @@ import chess.board.Board;
 import chess.board.pieces.Piece;
 import chess.board.squares.Square;
 import chess.player.Player;
+import effects.EffectMachineController;
 
 import java.util.ArrayList;
 
 public class PawnMovement extends Movement {
 
     public ArrayList<int[]> getValidMoves(boolean safeMovements, Piece piece){
+        ArrayList<int[]> moves = new ArrayList<>();
+        // O Movimento não é permitido se o peão estiver congelado:
+        if (EffectMachineController.instance.isFrozen(piece.getSquare().getPosition()[0], piece.getSquare().getPosition()[1]))
+            return moves;
+
         // Pega 2 como limite de movimentos caso seja o primeiro movimento do peão
         int limit = 1;
         if (!piece.getWasMoved()){
@@ -20,7 +26,6 @@ public class PawnMovement extends Movement {
 
         // Pegar os movimentos válidos
         int[] direction = getDirection(piece.getPlayer());
-        ArrayList<int[]> moves = new ArrayList<>();
         moves.addAll(untilBlockedPath(piece, direction[0], direction[1], false, limit));
         moves.addAll(getPawnAttack(direction, piece));
 

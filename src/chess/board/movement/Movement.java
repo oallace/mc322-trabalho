@@ -32,7 +32,7 @@ public abstract class Movement {
 
         Square currentSquare = piece.getSquare();
 
-        //       Checa se está congelado:
+        // Checa se está congelado:
         if (EffectMachineController.instance.isFrozen(currentSquare.getPosition()[0], currentSquare.getPosition()[1]))
             return moves;
 

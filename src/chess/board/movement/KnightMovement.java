@@ -5,6 +5,7 @@ package chess.board.movement;
 import chess.board.Board;
 import chess.board.pieces.Piece;
 import chess.board.squares.Square;
+import effects.EffectMachineController;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,10 @@ public class KnightMovement extends Movement {
     public ArrayList<int[]> getValidMoves(boolean safeMovements, Piece piece){
 
         ArrayList<int[]> moves = new ArrayList<>();
+        // Se o cavalo estiver congelado, ele não pode se movimentar:
+        if (EffectMachineController.instance.isFrozen(piece.getSquare().getPosition()[0], piece.getSquare().getPosition()[1]))
+            return moves;
+
         moves.addAll(getLMovement(piece, 0, 1));
         moves.addAll(getLMovement(piece, 0, -1));
         moves.addAll(getLMovement(piece, 1, 0));
