@@ -1,6 +1,7 @@
 package chess.player;
 
 import chess.player.nation.ISkill;
+import view.Window;
 
 public class Player {
 	
@@ -41,11 +42,13 @@ public class Player {
 	{
 		nation.basicSkill(iTarget, jTarget);
 		scoreChange(-3);
+		Window.instance.actualizePlayerScore(name, score);
 	}
 
 	public void mainSkill(int iTarget, int jTarget)
 	{
 		nation.mainSkill(iTarget, jTarget);
 		scoreChange(-7);
+		Window.instance.actualizePlayerScore(name, score);
 	}
 }

@@ -159,7 +159,7 @@ public class StateMachineController implements IChess{   // A máquina de estado
         // checa se há pontuação suficiente
         if (isSkillSelectionState())
             changeTo(new PieceSelectionState());
-        else if (currentPlayer.getScore() >= 0)
+        else if (currentPlayer.getScore() >= 9)
         {
             changeTo(new MainSkillSelectionState());
         }

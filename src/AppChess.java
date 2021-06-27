@@ -16,7 +16,7 @@ public class AppChess {
 		Board board = new Board();
 		
 		// Controller
-		StateMachineController machine = new StateMachineController("Oallace", "Cabeçudo");
+		StateMachineController machine = new StateMachineController("Player1", "Player2");
 		machine.changeTo(new LoadState());
 
 		IManageEffects effectsMachine = new EffectMachineController();

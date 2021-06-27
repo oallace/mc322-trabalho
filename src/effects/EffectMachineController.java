@@ -81,7 +81,6 @@ public class EffectMachineController implements IEffects{
 
         for (int i = 0; i < changes.size(); i++) {
             Window.instance.actualizeSquareRepresentation(changes.get(i)[0], changes.get(i)[1], true);
-            System.out.println(changes.get(i)[0] + " " + changes.get(i)[1]);
         }
         changes.clear();
 

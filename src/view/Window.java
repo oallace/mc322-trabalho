@@ -97,16 +97,12 @@ public class Window extends JFrame implements IManageRepresentation{
 
 		// Analisar a adição ou remoção de peça
 		if (attPiece){
+			squareButton.removeImage(0);
 			// Adiciona uma peça
 			if (chess.thereIsPiece(iPos, jPos)){
 				String pieceName = chess.getPieceName(iPos, jPos);
 				if (pieceName != null)
 					squareButton.addImage(0, "./images/" +pieceName + ".png", 10, 15, 55, 55);
-			}
-
-			// Remove uma peça
-			else{
-				squareButton.removeImage(0);
 			}
 		}
 
