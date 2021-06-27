@@ -14,7 +14,7 @@ public class Window extends JFrame implements IManageRepresentation{
 	@Serial
 	private static final long serialVersionUID = 7446721714968740806L;
 
-	public static IManageRepresentation instance;  // Para facilitar acesso externo.
+	public static Window instance;  // Para facilitar acesso externo.
 
 	IChess chess;
 
