@@ -61,26 +61,6 @@ Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que po
 * A **Máquina de Estados** é a responsável pela orquestração máxima do jogo: ela recebe da **Interface Gráfica** os comandos do usuário, administra os estados de jogo e informa as configurações dos demais componentes durante o jogo.    
 * A **Máquina de Efeitos** recebe informações de uso de habilidades pelos jogadores, as configura e retorna informações sobre os efeitos que estão ativadas no momento. 
 
-### Componente Effects
-> Componente que gere os efeitos do jogo: congelamento e muralha de pedras. Com ele podemos atribuir efeitos e fazer consultas sobre efeitos ativos.
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `effect.EffectMachineControl`
-Autores | `Wallace Gustavo Santos Lima`
-Interfaces | `IManageEffects` <br> `IAskEffects`
-
-### Componente Effects
-> Componente que gere os efeitos do jogo: congelamento e muralha de pedras. Com ele podemos atribuir efeitos e fazer consultas sobre efeitos ativos.
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `effect.EffectMachineControl`
-Autores | `Wallace Gustavo Santos Lima`
-Interfaces | `IManageEffects` <br> `IAskEffects`
-
 
 ### Componente EffectsManagement
 > Componente que gere os efeitos do jogo: congelamento e muralha de pedras. Com ele podemos atribuir efeitos e fazer consultas sobre efeitos ativos.
@@ -116,6 +96,7 @@ Interfaces | `IAskChess` <br> `IOperateChess` <br> `IChess`
 **Detalhamento**
 
 ![Estrutura Interna Chess](./assets/about/chess_diagram.png)
+
 O componente Chess é o mais complexo dos componentes do projeto, ele funciona com um sistema interno bastante complexo.
 
 Ele funciona com base nos estados de jogo, classes **State** (*Carregamento, Início de Jogo, Início de turno, Seleção de Peça, Seleção de Habilidade, Seleção de Destino, Execução de Movimento, Fim de Turno e Fim de jogo*). Cada estado corresponde a uma etapa do jogo de xadrez que deve agir de uma maneira diferente.
