@@ -22,7 +22,7 @@ public class EffectMachineController implements IEffects{
 
     @Override
     public boolean freezeSquare(int iPos, int jPos) {
-        if (iPos > 0 && iPos < 8 && jPos > 0 && jPos < 8)
+        if (iPos >= 0 && iPos < 8 && jPos >= 0 && jPos < 8)
         {
             if (activeEffects[iPos][jPos] == null) {
                 activeEffects[iPos][jPos] = new FreezingEffect(iPos, jPos);
@@ -41,7 +41,7 @@ public class EffectMachineController implements IEffects{
 
     @Override
     public boolean createWall(int iPos, int jPos) {
-        if (iPos > 0 && iPos < 8 && jPos > 0 && jPos < 8)
+        if (iPos >= 0 && iPos < 8 && jPos >= 0 && jPos < 8)
         {
             if (activeEffects[iPos][jPos] == null) {
                 activeEffects[iPos][jPos] = new WallEffect(iPos, jPos);
@@ -79,8 +79,10 @@ public class EffectMachineController implements IEffects{
                     }
             }
 
-        for (int i = 0; i < changes.size(); i++)
-            Window.instance.actualizeSquareRepresentation(changes.get(i)[0], changes.get(i)[1], false);
+        for (int i = 0; i < changes.size(); i++) {
+            Window.instance.actualizeSquareRepresentation(changes.get(i)[0], changes.get(i)[1], true);
+            System.out.println(changes.get(i)[0] + " " + changes.get(i)[1]);
+        }
         changes.clear();
 
     }

@@ -14,6 +14,8 @@ public interface IAskChess {
 
     public  boolean isMoveSelectionState();
 
+    public boolean isSkillSelectionState();
+
     public int[] getSelectedPiecePosition();
 
     public boolean isCurrentPlayerPiece(int iPos, int jPos);

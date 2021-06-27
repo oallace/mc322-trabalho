@@ -75,21 +75,6 @@ public class Window extends JFrame implements IManageRepresentation{
 	public void actualizeSquareRepresentation(int iPos, int jPos, boolean attPiece){
 		SquareButton squareButton = this.board[iPos][jPos];
 
-		// Analisar a adição ou remoção de peça
-		if (attPiece){
-			// Adiciona uma peça
-			if (chess.thereIsPiece(iPos, jPos)){
-				String pieceName = chess.getPieceName(iPos, jPos);
-				if (pieceName != null)
-					squareButton.addImage(0, "./images/" +pieceName + ".png", 10, 15, 55, 55);
-			}
-
-			// Remove uma peça
-			else{
-				squareButton.removeImage(0);
-			}
-		}
-			
 		// Adiciona um highlight
 		if (chess.squareIsHighlighted(iPos, jPos)){
 			if (Board.instance.getPiece(iPos, jPos) != null){
@@ -110,14 +95,26 @@ public class Window extends JFrame implements IManageRepresentation{
 			squareButton.removeImage(1);
 		}
 
+		// Analisar a adição ou remoção de peça
+		if (attPiece){
+			// Adiciona uma peça
+			if (chess.thereIsPiece(iPos, jPos)){
+				String pieceName = chess.getPieceName(iPos, jPos);
+				if (pieceName != null)
+					squareButton.addImage(0, "./images/" +pieceName + ".png", 10, 15, 55, 55);
+			}
+
+			// Remove uma peça
+			else{
+				squareButton.removeImage(0);
+			}
+		}
+
 		// Atualizações de efeitos
+		squareButton.removeImage(2);
 		if(EffectMachineController.instance.getEffectName(iPos, jPos) != null)
 		{
 			squareButton.addImage(2, "./images/" + EffectMachineController.instance.getEffectName(iPos, jPos) + ".png",0, 0, 100, 100);
-		}
-		else
-		{
-			squareButton.removeImage(2);
 		}
 	}
 

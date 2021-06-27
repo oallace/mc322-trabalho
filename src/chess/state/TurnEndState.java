@@ -9,11 +9,14 @@ import chess.board.movement.Movement;
 import chess.board.pieces.King;
 import chess.board.pieces.Piece;
 import chess.player.Player;
+import effects.EffectMachineController;
 
 public class TurnEndState extends State{
 
     public void enter(){
         System.out.println("TurnEndState:");
+
+        EffectMachineController.instance.passShift();
 
         Player currentlyPlayer = StateMachineController.instance.getCurrentPlayer();
         Player enemyPlayer = (currentlyPlayer == StateMachineController.instance.getPlayer1()) ? StateMachineController.instance.getPlayer2() : StateMachineController.instance.getPlayer1();

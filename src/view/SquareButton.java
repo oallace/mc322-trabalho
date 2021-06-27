@@ -1,6 +1,8 @@
 package view;
 
 
+import chess.StateMachineController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,10 +79,17 @@ public class SquareButton extends JButton{
 			System.out.println("Selected Square:  Row " + position[0] + " - Column "+ position[1]);
 
 			if (Window.instance.chess.isPieceSelectionState() ||
-				Window.instance.chess.isMoveSelectionState()){
+				Window.instance.chess.isMoveSelectionState() ||
+				Window.instance.chess.isSkillSelectionState()){
 					
+					if (Window.instance.chess.isSkillSelectionState())
+					{
+						System.out.println("Teste 1");
+						StateMachineController.instance.requestSkill(position[0], position[1]);
+					}
+
 					// Se está no estado de MoveSelection e clicou em um highlight
-					if (Window.instance.chess.squareIsHighlighted(position[0], position[1])){
+					else if (Window.instance.chess.squareIsHighlighted(position[0], position[1])){
 						Window.instance.chess.setSelectedHighlight(position[0], position[1]);
 						Window.instance.chess.changeToPieceMovementState();
 					}
@@ -88,24 +97,33 @@ public class SquareButton extends JButton{
 					// Se esta no estado de PieceSelection ou MoveSelection e clicou em uma peça
 					else if (Window.instance.chess.thereIsPiece(position[0], position[1])){
 						// Se esta peça esta sendo clicada pela segunda vez consecutiva, retira os highlights dela
-						if (position  == Window.instance.chess.getSelectedPiecePosition()){
+						if (comparePosition(position, Window.instance.chess.getSelectedPiecePosition())){
 							Window.instance.chess.setSelectedPiecePosition(null);
 							Window.instance.chess.changeToPieceSelectionState();
 						}
-						
+
 						// Se é uma nova peça sendo clicada, vai para o MoveSelectionState para adicionar os highlights
 						else if (Window.instance.chess.isCurrentPlayerPiece(position[0], position[1])){
 							Window.instance.chess.setSelectedPiecePosition(position);
 							Window.instance.chess.changeToMoveSelectionState();
 						}
 					}
-					
+
 					// Se clicar em um square vazio, volta para o estado de seleção de peça e retira qualquer highlight que estivesse marcado
 					else{
 						Window.instance.chess.setSelectedPiecePosition(null);
 						Window.instance.chess.changeToPieceSelectionState();
 					}
 			}
+		}
+
+		private boolean comparePosition(int[] p1, int[] p2)
+		{
+			if (p1 != null && p2 !=null)
+			{
+				return p1[0] == p2[0] && p1[1] == p2[1];
+			}
+			return false;
 		}
 	}
 }

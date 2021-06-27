@@ -10,4 +10,10 @@ public interface IOperateChess {
     public void  changeToPieceSelectionState();
 
     public void changeToMoveSelectionState();
+
+    public void changeToBasicSkillSelectionState();
+
+    public void changeToMainSkillSelectionState();
+
+    public void requestSkill(int iTarget, int jTarget);
 }

@@ -4,6 +4,8 @@ package chess;
 import chess.board.Board;
 import chess.board.pieces.Piece;
 import chess.player.Player;
+import chess.player.nation.IceNation;
+import chess.player.nation.StoneNation;
 import chess.state.*;
 
 public class StateMachineController implements IChess{   // A máquina de estados controla o fluxo do jogo alternando entre os estados.
@@ -20,8 +22,8 @@ public class StateMachineController implements IChess{   // A máquina de estado
 
     public StateMachineController(String namePlayer1, String namePlayer2) {
         instance = this;
-        player1 = new Player("WhiteTeam", 0, namePlayer1);
-        player2 = new Player("BlackTeam", 0, namePlayer2);
+        player1 = new Player("WhiteTeam", 0, namePlayer1, new IceNation());
+        player2 = new Player("BlackTeam", 0, namePlayer2, new StoneNation());
         currentState = null;
         selectedPiece = null;
         selectedHighlight = new int[2];
@@ -94,6 +96,12 @@ public class StateMachineController implements IChess{   // A máquina de estado
     }
 
     @Override
+    public boolean isSkillSelectionState() {
+//        Adicionar MainSkillSelectionState
+        return  currentState instanceof BasicSkillSelectionState || currentState instanceof  MainSkillSelectionState;
+    }
+
+    @Override
     public int[] getSelectedPiecePosition(){
         if (getSelectedPiece() != null)
             return getSelectedPiece().getSquare().getPosition();
@@ -131,6 +139,40 @@ public class StateMachineController implements IChess{   // A máquina de estado
     @Override
     public void changeToMoveSelectionState() {
         changeTo(new MoveSelectionState());
+    }
+
+    @Override
+    public void changeToBasicSkillSelectionState()
+    {
+        // checa se há pontuação suficiente
+        if (isSkillSelectionState())
+            changeTo(new PieceSelectionState());
+        else if (currentPlayer.getScore() >= 3)
+        {
+            changeTo(new BasicSkillSelectionState());
+        }
+    }
+
+    @Override
+    public void changeToMainSkillSelectionState()
+    {
+        // checa se há pontuação suficiente
+        if (isSkillSelectionState())
+            changeTo(new PieceSelectionState());
+        else if (currentPlayer.getScore() >= 0)
+        {
+            changeTo(new MainSkillSelectionState());
+        }
+    }
+
+    @Override
+    public void requestSkill(int iTarget, int jTarget)
+    {
+        if (currentState instanceof  BasicSkillSelectionState)
+            currentPlayer.basicSkill(iTarget, jTarget);
+        else
+            currentPlayer.mainSkill(iTarget, jTarget);
+        changeTo(new TurnEndState());
     }
 
     public int[] getSelectedHighlight() {
