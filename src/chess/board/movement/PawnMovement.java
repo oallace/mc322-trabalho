@@ -69,12 +69,18 @@ public class PawnMovement extends Movement {
         Piece selectedPiece = piece;
 
         square = Board.instance.getSquare(selectedPiece.getSquare().getPosition()[0]+direction[0], selectedPiece.getSquare().getPosition()[1]-1);
-        if (square != null && (isEnemy(square, piece.getPlayer()) || square.getMoveType() == MoveType.EnPassantMovement)){
+            if (square != null &&
+                !EffectMachineController.instance.isWall(square.getPosition()[0], square.getPosition()[1]) && // Não ultrapassa muralhas
+                (isEnemy(square, piece.getPlayer()) || square.getMoveType() == MoveType.EnPassantMovement))
+            {
             pawnAttack.add(square.getPosition());
-        }
+           }
 
         square = Board.instance.getSquare(selectedPiece.getSquare().getPosition()[0]+direction[0], selectedPiece.getSquare().getPosition()[1]+1);
-        if (square != null && (isEnemy(square, piece.getPlayer()) || square.getMoveType() == MoveType.EnPassantMovement)){
+        if (square != null &&
+            !EffectMachineController.instance.isWall(square.getPosition()[0], square.getPosition()[1]) && // Não ultrapassa muralhas
+            (isEnemy(square, piece.getPlayer()) || square.getMoveType() == MoveType.EnPassantMovement))
+        {
             pawnAttack.add(square.getPosition());
         }
 
