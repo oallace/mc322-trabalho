@@ -21,6 +21,10 @@ public class Window extends JFrame implements IManageRepresentation{
 
 	private final SquareButton[][] board;
 
+	private TextLabel player1Score;
+
+	private TextLabel player2Score;
+
 	
 	public Window(IChess chess){
 		super();
@@ -36,14 +40,23 @@ public class Window extends JFrame implements IManageRepresentation{
 		// Matriz que guarda os Squares dentro do BoardPanel.
 		Container contentPane = getContentPane();
 		contentPane.setLayout(null);
-		contentPane.setBackground(Color.darkGray);
+		contentPane.setBackground(new Color(54, 54, 54));  // 53, 52, 52
 		
 		// Instancia os componentes do jogo dentro do contentPane
 		contentPane.add(new BoardPanel());
-		contentPane.add(new TextLabel(chess.getPlayerName(1), 75, 10, 300, 20, 17, 255, 255, 255)); // solicitar nome para Player
-		contentPane.add(new TextLabel(chess.getPlayerName(2), 75, 728, 300, 20, 17, 255, 255, 255));
+		contentPane.add(new TextLabel(chess.getPlayerName(2), 75, 10, 300, 20, 17, 255, 255, 255)); // solicitar nome para Player
+		contentPane.add(new TextLabel(chess.getPlayerName(1), 75, 728, 300, 20, 17, 255, 255, 255));
 		contentPane.add(new ImageLabel("./images/user.png", 20, 9, 45, 45)); // editar tamanho da imagem.
 		contentPane.add(new ImageLabel("./images/user.png", 20, 727, 45, 45));
+		contentPane.add(new BasicSkillButton("B", 552, 17, 35, 35));
+		contentPane.add(new MainSkillButton("M", 632, 17, 35, 35));
+		contentPane.add(new BasicSkillButton("B", 552, 730, 35, 35));
+		contentPane.add(new MainSkillButton("M", 632, 730, 35, 35));
+		
+		this.player2Score = new TextLabel("Pts: 0", 75, 38, 100, 15, 15, 255, 255, 255);
+		contentPane.add(this.player2Score);
+		this.player1Score = new TextLabel("Pts: 0", 75, 756, 100, 15, 15, 255, 255, 255);
+		contentPane.add(this.player1Score);
 		
 		setVisible(true);
 	}
@@ -106,5 +119,11 @@ public class Window extends JFrame implements IManageRepresentation{
 		{
 			squareButton.removeImage(2);
 		}
+	}
+
+
+	public void actualizePlayerScore(String player, int newScore){
+		TextLabel text = (player == "Player1") ? this.player1Score : this.player2Score;
+		text.setText("Pts: "+ newScore);
 	}
 }

@@ -3,8 +3,12 @@ package chess.board.movement;
 
 import chess.StateMachineController;
 import chess.board.Board;
+import chess.board.pieces.Bishop;
+import chess.board.pieces.Knight;
+import chess.board.pieces.Pawn;
 import chess.board.pieces.Piece;
 import chess.board.pieces.Queen;
+import chess.board.pieces.Rook;
 import chess.board.squares.Square;
 import view.Window;
 
@@ -27,6 +31,19 @@ public abstract class SpecialsMovements {
             
             // Retirar ela da array List do jogador, e adicionar um imageLabel na Window das peças capturadas do inimigo.
             Board.instance.removeTeamPiece(deadPiece);
+
+            // Atualiza a pontuação do jogador após comer uma peça inimiga.
+            if (deadPiece instanceof Pawn)
+                piece.getPlayer().scoreChange(1);
+            else if (deadPiece instanceof Knight || deadPiece instanceof Bishop)
+                piece.getPlayer().scoreChange(3);
+            else if (deadPiece instanceof Rook)
+                piece.getPlayer().scoreChange(5);
+            else if (deadPiece instanceof Queen)
+                piece.getPlayer().scoreChange(9);
+
+            String player = (piece.getPlayer() == StateMachineController.instance.getPlayer1()) ? "Player1" : "Player2";
+            Window.instance.actualizePlayerScore(player, piece.getPlayer().getScore());
         }
 
         // Movimenta a peça para a posição alvo.

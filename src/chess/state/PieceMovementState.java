@@ -31,7 +31,8 @@ public class PieceMovementState extends State{   // Movimenta a peça e inicia o
         else
             SpecialsMovements.normalMovement();
 
-        
+
+        // Volta o MoveType do square selecionado para NormalMovement
         highlightedSquare.setMoveType(MoveType.NormalMovement);
 
         // Após 1 rodada, transforma os moveType EnPassantMovement do inimigo em NormalMovement.
