@@ -79,3 +79,13 @@ Classe | `effect.EffectMachineControl`
 Autores | `Wallace Gustavo Santos Lima`
 Interfaces | `IManageEffects` <br> `IAskEffects`
 
+### Interfaces
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IDataSet extends ITableProducer, IDataSetProperties {
+}
+~~~
