@@ -24,16 +24,6 @@ public class AppChess {
 		// View
 		Window window = new Window(machine);
 
-//		Testando efeitos:
-		effectsMachine.createWall(0, 1);
-		effectsMachine.passShift();
-		ISkill stoneNation = new StoneNation();
-		stoneNation.basicSkill(5, 4);
-		stoneNation.mainSkill(4, 6);
-		ISkill iceNation = new IceNation();
-		iceNation.mainSkill(2,5);
-		effectsMachine.passShift();
-
 
 		machine.startGame();
 	}

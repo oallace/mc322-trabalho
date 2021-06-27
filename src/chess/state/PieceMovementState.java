@@ -12,10 +12,6 @@ public class PieceMovementState extends State{   // Movimenta a peça e inicia o
     public void enter(){
         System.out.println("PieceMovementState:");
 
-        // Após 1 rodada, transforma os moveType EnPassantMovement em NormalMovement.
-        int iPos = (StateMachineController.instance.getCurrentPlayer().getTeam() == "WhiteTeam") ? 5 : 2;
-        clearEnPassants(iPos);
-
         Square highlightedSquare = Board.instance.getSquare(StateMachineController.instance.getSelectedHighlight()[0], StateMachineController.instance.getSelectedHighlight()[1]);
         MoveType moveType = highlightedSquare.getMoveType();
 
@@ -37,6 +33,10 @@ public class PieceMovementState extends State{   // Movimenta a peça e inicia o
 
         
         highlightedSquare.setMoveType(MoveType.NormalMovement);
+
+        // Após 1 rodada, transforma os moveType EnPassantMovement do inimigo em NormalMovement.
+        int iPos = (StateMachineController.instance.getCurrentPlayer().getTeam() == "WhiteTeam") ? 2 : 5;
+        clearEnemyEnPassants(iPos);
         
         StateMachineController.instance.changeTo(new TurnEndState());
     }
@@ -44,7 +44,7 @@ public class PieceMovementState extends State{   // Movimenta a peça e inicia o
 
 
     // Percorre os Squares do jogador atual que possui algum EnPassant moveType e transforma em NormalMovement moveType
-    void clearEnPassants(int iPos){
+    void clearEnemyEnPassants(int iPos){
         for (int jPos = 0; jPos < 8; jPos++){
             Board.instance.getSquare(iPos, jPos).setMoveType(MoveType.NormalMovement);
         }

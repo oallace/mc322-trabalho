@@ -1,6 +1,7 @@
 package view;
 
 import chess.IChess;
+import chess.board.Board;
 import effects.EffectMachineController;
 
 import java.awt.Color;
@@ -78,10 +79,18 @@ public class Window extends JFrame implements IManageRepresentation{
 			
 		// Adiciona um highlight
 		if (chess.squareIsHighlighted(iPos, jPos)){
-			if (squareButton.getColor().equals("beige"))
-				squareButton.addImage(1, "./images/circleFullBeige.png", 10, 15, 70, 70);
-			else
-				squareButton.addImage(1, "./images/circleFullGreen.png", 10, 15, 70, 70);
+			if (Board.instance.getPiece(iPos, jPos) != null){
+				if (squareButton.getColor().equals("beige"))
+					squareButton.addImage(1, "./images/ringBeige.png", 10, 15, 70, 70);
+				else
+					squareButton.addImage(1, "./images/ringGreen.png", 10, 15, 70, 70);
+			}
+			else{
+				if (squareButton.getColor().equals("beige"))
+					squareButton.addImage(1, "./images/circleFullBeige.png", 10, 15, 70, 70);
+				else
+					squareButton.addImage(1, "./images/circleFullGreen.png", 10, 15, 70, 70);
+			}
 		}
 		// Remove um highlight
 		else{
