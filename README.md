@@ -4,17 +4,17 @@ Trabalho Final da disciplina de MC322 - Programação Orientada a Objetos na UNI
 
 Para reproduzir o jogo, na pasta [out/production/mc322-trabalho](./out/production/mc322-trabalho), execute a classe java AppChess.
 
-## Descrição
+# Descrição
 
 Uma partida de xadrez não é mais apenas uma batalha entre peças brancas e peças pretas, agora é uma batalha entre nações.  
 
 Cada nação tem habilidades especiais que mudam drasticamente o fluxo da partida: você não precisa se preocupar com o próximo movimento de uma peça se ela estiver congelada!
 
-### Fluxo do Jogo
+## Fluxo do Jogo
 
 O jogo tem como base uma partida de xadrez entre duas nações, entretanto cada nação possui habilidades especiais que alteram um pouco a lógica do jogo original. Ganha o jogo quem der Xeque-Mate no oponente. 
 
-#### Pontuação
+### Pontuação
 
 Cada peça comida por um jogador possui um valor que será somado à sua pontuação, sendo:
 
@@ -24,36 +24,36 @@ Cada peça comida por um jogador possui um valor que será somado à sua pontua�
 * Torre: 5 pontos
 * Rainha: 9 pontos
 
-#### Habilidades
+### Habilidades
 
 Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que podem ser usadas durante a partida. Cada habilidade possui um custo que deve ser descontado da pontuação do jogador para que seja utilizada. A *Habilidade Básica* custa 3 pontos e a *Habilidade Especial* custa 9 pontos.
 
-### Nações
+## Nações
 
-#### Nação de Gelo
+### Nação de Gelo
 
 * *Habilidade Básica:* Congela a casa selecionada. As peças sobre casas congeladas não podem se mover. Dura 1 turno.
 * *Habilidade Especial:* Congela a casa selecionada e as suas casas imediatamente vizinhas.
 
-#### Nação de Pedra
+### Nação de Pedra
 
 * *Habilidade Básica:* Levanta uma muralha de pedra na casa selecionada. Nenhuma peça, exceto pelo cavalo, pode realizar um movimento que passe por uma casa que possua uma muralha de pedra. Peças que estão em casas que possuem uma muralha podem sair. O efeito dura 1 turno.
 * *Habilidade Especial:* Selecionando uma Casa, levantam-se muralhas de pedra nas suas casas vizinhas.
 
-## Equipe
+# Equipe
 
 * Igor Henrique Buranello dos Santos - RA 171953
 * Wallace Gustavo Santos Lima - RA 195512
 
-## Vídeos do Projeto
-### ![Vídeo da prévia](./assets/about/preview_video.mkv)
-### ![Vídeo final](./assests/about/final_video.mp4)
+# Vídeos do Projeto
+## ![Vídeo da prévia](./assets/about/preview_video.mkv)
+## ![Vídeo final](./assests/about/final_video.mp4)
 
-## Slides do Projeto
-### ![Slides da prévia](./assets/about/preview_slides.pdf)
-### ![Slides Finais](./assets/about/final_slides.pdf)
+# Slides do Projeto
+## ![Slides da prévia](./assets/about/preview_slides.pdf)
+## ![Slides Finais](./assets/about/final_slides.pdf)
 
-## Relatório de Evolução
+# Relatório de Evolução
 
 > Começamos por desenvolver a base do jogo de Xadrez e a Interface Gráfica. Por não termos compreendido adequadamente à época como seria um projeto feitos em componentes de software, esta parte foi feita somente com Classes e as relações entre elas. Com o básico de Xadrez desenvolvido, nos restava algumas análises de movimentos e checagens especiais caracteristicas do Xadrez (como o Roque, a captura *en passant* e as análises de Xeque e Xeque-Mate) e a criação da Máquina de Efeitos. Durante o processo da criação da Máquina de Efeitos, com a ideia de componentes mais madura, pudemos desenvolve-la com bases nos princípios de componentização. Por fim, juntamos os componentes e tentamos adaptar o restante do projeto de acordo com esses princípios. 
 
@@ -71,14 +71,14 @@ public static IEffects instance
 
 # Conclusões e Trabalhos Futuros
 
-> <Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.>
+> Concluímos uma primeira versão, para entrega, do projeto com uma componentização ainda tímida, pois demoramos a assimilar o conceito de componentes de software. Com o conceito mais maduro e trabalhado, pretendemos componentizar os três componentes principais, isto é, desenvolvê-los de modo que sejam conntituidos de componentes externos. Isso seria especialmente bem-vindo no componente Chess.
+> Nesse sentido, pretendemos abandonar a instanciação estática e fazer a conexão entre os componentes de maneira direta.
+> Por fim, após essas melhorias estruturais, pretendemos expandir o projeto: criar mais nações e poderes especiais.
 
 
-## Documentação dos Componentes
+# Documentação dos Componentes
 
-## Diagramas
-
-### Diagrama Geral do Projeto
+## Diagrama Geral do Projeto
 ![Diagrama Geral do Projeto](./assets/about/general_diagram.png)  
 
 
@@ -87,7 +87,7 @@ public static IEffects instance
 * A **Máquina de Efeitos** recebe informações de uso de habilidades pelos jogadores, as configura e retorna informações sobre os efeitos que estão ativadas no momento. 
 
 
-### Componente EffectsManagement
+## Componente EffectsManagement
 > Componente que gere os efeitos do jogo: congelamento e muralha de pedras. Com ele podemos atribuir efeitos e fazer consultas sobre efeitos ativos.
 
 **Ficha Técnica**
@@ -98,7 +98,7 @@ Autores | `Wallace Gustavo Santos Lima`
 Interfaces | `IManageEffects` <br> `IAskEffects`
 
 
-### Componente View
+## Componente View
 > Componente responsável pela apresentação gráfica do jogo. Recebe informações do usuário e se as comunica para a máquina de efeitos.
 
 **Ficha Técnica**
@@ -108,7 +108,7 @@ Classe | `view.Window`
 Autores | `Wallace Gustavo Santos Lima` <br> `Igor Henrique Buranello dos Santos`
 Interfaces | `IManageRepresentation`
 
-### Componente Chess
+## Componente Chess
 > Componente principal do jogo. A partir dele podemos fazer perguntas sobre o estado do jogo e pedir movimentações.
 
 **Ficha Técnica**
@@ -135,27 +135,63 @@ Classes do Componente:
 * **Nation** representa as nações do jogo. Cada nação possui uma habilidade básica e uma habilidade principal que podem ser executadas.
 
 
-### Interfaces
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
 ## Detalhamento das Interfaces
 
-### Interface `<nome da interface>`
+### Interface `IManageEffects`
 
-`<Resumo do papel da interface.>`
+`Interface que permite informa mudanças de efeitos para a Máquina de Efeitos`
 
 ~~~
-<Interface em Java.>
+public interface IManageEffects {
+
+    public boolean freezeSquare(int iPos, int jPos);
+
+    public boolean createWall(int iPos, int jPos);
+
+    public void passShift();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`freezeSquare` | `Solicita o congelamento de um Square`
+`createWall` | `Solicita a criação de uma muralha na posição informada`
+`passShift` | `Informa uma mudança de turno`
+
+
+### Interface `IAskEffects`
+
+`Interface que permite perguntas para a Máquina de Efeitos`
+
+~~~
+public interface IAskEffects
+{
+    public boolean isFrozen(int iPos, int jPos);
+
+    public boolean isWall(int iPos, int jPos);
+
+    public String getEffectName(int iPos, int jPos);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`isFrozen` | `Pergunta se um Square está congelado`
+`isWall` | `Pergunta se há uma muralha em um Square`
+`getEffectName` | `Pergunta o nome do efeito que está ativo sobre um Square`
+
+
+### Interface `IManageRepresentation`
+
+`Interface que permite o gerenciamento da representação gráfica do jogo.`
+
+~~~
+public interface IManageRepresentation 
+{
+    public void actualizeSquareRepresentation(int iPos, int jPos, boolean attPiece);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`actualizeRepresentation` | `Solicita a atualização da representação de um Square.`
