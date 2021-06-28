@@ -68,7 +68,101 @@ public static Window instance
 
 public static IEffects instance
 ~~~
+> No projeto, o Controller (parte da arquitetura) édividido em 2 componentes : Umcomponente composto por uma máquina de estados, chamadaStateMachineController,juntamente com as classes dos estados do jogo e demovimento das peças, e outrocomponente  formado pelo EffectMachineController e as classes relacionadas aos efeitos.
+> Os estados do jogo são o seguinte:
+* LoadState: Estado que carrega as peças no tabuleiro
+* TurnBeginState: Estado que inicia o turno e determinao jogado atual do turno
+* PieceSelectionState: Estado para o usuário selecionaruma peça
+* MoveSelectionState: Estado para o usuário escolher1 dentre os possíveismovimentos para aquela peça.
+* BasicSkillSelectionState: Estado para escolher umaregião do tabuleiro para aplicarum poder básico.
+* MainSkillSelectionState: Estado para escolher umaregião do tabuleiro para aplicarum poder especial.
+* PieceMovementState: Estado que realiza um determinadomovimento da peça.
+* TurnEndState: Estado que analisa o fim do turno,podendo acabar ou não o jogo.
+* GameEndState: Estado que avisa o término do jogo,e encerra seu fluxo
+> O fluxo do jogo (a execução ordenada destes estadoscitados a cima) é controladopela StateMachineController, através do método:
+~~~java
+// Muda o jogo do estado atual para um outro estado. Antes de iniciar o novo estado, executa a saída do estado anterior.
+public void changeTo(State state) {
+    if (this.currentState != state) {
 
+        if (this.currentState != null) {
+            this.currentState.exit();
+        }
+
+        this.currentState = state;
+        if (this.currentState != null) {
+            this.currentState.enter();
+        }
+    }
+}
+~~~
+> Passando uma instancia de um estado (os estados são classes abstratas, quepossuem duas métodos : public void enter() e publicvoid exit(), que são executados quandoo estado é iniciado e finalizado, respectivamente.A método changeTo sempre, ao iniciar umnovo estado, executa o método exit() do estado anteriorantes de executar o método enter() do novo estado.
+> A StateMachineController controla o fluxo iniciandoum novo estado sempre quechega no fim de um estado atual: No final do TurnBeginState,inicial o estado dePieceSelectionState. Neste estado nada acontece atéque o jogador clique em uma peça, ea máquina de estados inicie o estado de MoveSelectionState,em que nada acontece atéque o jogador clique em alguma das posições disponíveispara aquela peça se movimentar.Seguindo este fluxo, a StateMachineController, atravésde sucessivas chamadas do métodochangeTo, mantém o fluxo do jogo. Quando chega noTurnEndState, ou retorna para umachamada de TurnBeginState, reiniciando um ciclo, ou chama o GameEndState, encerrendoo fluxo do jogo.
+> EX:
+~~~java
+public class PieceMovementState extends State{   // Movimenta a peça e inicia o estado de fim de turno.
+
+    public void enter(){
+        System.out.println("PieceMovementState:");
+
+        Square highlightedSquare = Board.instance.getSquare(StateMachineController.instance.getSelectedHighlight()[0], StateMachineController.instance.getSelectedHighlight()[1]);
+        MoveType moveType = highlightedSquare.getMoveType();
+
+        // Analisa qual será o tipo de movimento e executa o movimento necessário.
+        if (moveType == MoveType.CastlingMovement)
+            SpecialsMovements.castlingMovement();
+        
+        else if (moveType == MoveType.PawnPromotionMovement)
+            SpecialsMovements.pawnPromotion();
+        
+        else if (moveType == MoveType.PawnDoubleMovement)
+            SpecialsMovements.pawnDoubleMovement();
+        
+        else if (moveType == MoveType.EnPassantMovement && StateMachineController.instance.getSelectedPiece() instanceof Pawn)
+            SpecialsMovements.enPassantMovement();
+        
+        else
+            SpecialsMovements.normalMovement();
+
+
+        // Volta o MoveType do square selecionado para NormalMovement
+        highlightedSquare.setMoveType(MoveType.NormalMovement);
+
+        // Após 1 rodada, transforma os moveType EnPassantMovement do inimigo em NormalMovement.
+        int iPos = (StateMachineController.instance.getCurrentPlayer().getTeam() == "WhiteTeam") ? 2 : 5;
+        clearEnemyEnPassants(iPos);
+        
+        StateMachineController.instance.changeTo(new TurnEndState());
+    }
+~~~
+> Neste estado PieceMovementState, uma ferramenta éutilizada para saber qual tipode movimento fazer (pois no xadrez existem movimentosespeciais): Public enum.
+~~~java
+public enum MoveType {     // Após obter os movimentos válidos para uma dada peça com as classes que herdam Movement, todos os squares
+                           // desses movimentos tem seu atributo moveType atualizado para NormalMovement. Após isso, caso haja algum
+    CastlingMovement,      // movimento especial para algum desses squares, o atributo moveType é alterado para este movimento especial.
+
+    PawnPromotionMovement,
+
+    PawnDoubleMovement,
+
+    EnPassantMovement,
+
+    NormalMovement;
+}
+~~~
+> Este public enum MoveType foi criado como forma deenumerar as possíveis formasde movimento e atribuí-los a um quadrado do tabuleiro.Todos os quadrados inicialmentepossuem um NormalMovement como valor de seu MoveType.No PieceSelectionState,percebe-se que, ao clicar em um quadrado no MoveSelectionStatepara mover a peça paraele, o tipo de movimento executado é o que se encontrana variável MoveType daquelequadrado. Esta variável MoveType de um quadrado éalterada caso haja algum movimentoespecial ao mover uma peça para aquele quadrado.
+> O movimento de todas as peças herdam Movement, classeque possui o metodoGetValidMoves, que reccebe dois parâmetros : A peçaque sera movida, e uma variávelbooleana que indica se é para ser analisado ou nãomovimentos seguros. Movimentoseguro entende-se um movimento que que, ao mover,não coloque o Rei em xeque.
+~~~java
+// Retorna uma lista com as posições de todos os movimentos possíveis para uma dada peça. O parametro safeMovements, caso tenha o valor
+// true, faz com que o método retorne apenas os movimentos que evitem que o Rei do jogador fique em cheque.
+public abstract ArrayList<int[]> getValidMoves(boolean safeMovements, Piece piece);
+~~~
+> O método isSquareAttacked analisa se um determinadoquadrado está sendoatacado por um jogador passado como parâmetro.
+~~~java
+// Analisa se um dado square está sob ataque de alguma peça do jogador passado como argumento
+public static boolean isSquareAttacked(Player player, Square square)
+~~~
+> O conjunto de métodos, getSafeMovements e isSafeMovement,analisam, para cadamovimento possível de uma peça obtido pelo getValidMoves(caso a parâmetrosafeMovements tenha sido passada como true), se aomover esta peça para aquelaposição, o Rei continua seguro.
 # Conclusões e Trabalhos Futuros
 
 > Concluímos uma primeira versão, para entrega, do projeto com uma componentização ainda tímida, pois demoramos a assimilar o conceito de componentes de software. Com o conceito mais maduro e trabalhado, pretendemos componentizar os três componentes principais, isto é, desenvolvê-los de modo que sejam conntituidos de componentes externos. Isso seria especialmente bem-vindo no componente Chess.
