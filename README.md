@@ -2,6 +2,8 @@
 
 Trabalho Final da disciplina de MC322 - Programação Orientada a Objetos na UNICAMP, SP.
 
+Para reproduzir o jogo, na pasta [out/production/mc322-trabalho](./out/production/mc322-trabalho), execute a classe java AppChess.
+
 ## Descrição
 
 Uma partida de xadrez não é mais apenas uma batalha entre peças brancas e peças pretas, agora é uma batalha entre nações.  
@@ -24,7 +26,7 @@ Cada peça comida por um jogador possui um valor que será somado à sua pontua�
 
 #### Habilidades
 
-Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que podem ser usadas durante a partida. Cada habilidade possui um custo que deve ser descontado da pontuação do jogador para que seja utilizada. A *Habilidade Básica* custa 3 pontos e a *Habilidade Especial* custa 12 pontos.
+Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que podem ser usadas durante a partida. Cada habilidade possui um custo que deve ser descontado da pontuação do jogador para que seja utilizada. A *Habilidade Básica* custa 3 pontos e a *Habilidade Especial* custa 9 pontos.
 
 ### Nações
 
@@ -45,9 +47,32 @@ Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que po
 
 ## Vídeos do Projeto
 ### ![Vídeo da prévia](./assets/about/preview_video.mkv)
+### ![Vídeo final](./assests/about/final_video.mp4)
 
 ## Slides do Projeto
 ### ![Slides da prévia](./assets/about/preview_slides.pdf)
+### ![Slides Finais](./assets/about/final_slides.pdf)
+
+## Relatório de Evolução
+
+> Começamos por desenvolver a base do jogo de Xadrez e a Interface Gráfica. Por não termos compreendido adequadamente à época como seria um projeto feitos em componentes de software, esta parte foi feita somente com Classes e as relações entre elas. Com o básico de Xadrez desenvolvido, nos restava algumas análises de movimentos e checagens especiais caracteristicas do Xadrez (como o Roque, a captura *en passant* e as análises de Xeque e Xeque-Mate) e a criação da Máquina de Efeitos. Durante o processo da criação da Máquina de Efeitos, com a ideia de componentes mais madura, pudemos desenvolve-la com bases nos princípios de componentização. Por fim, juntamos os componentes e tentamos adaptar o restante do projeto de acordo com esses princípios. 
+
+# Destaques de Código
+
+> Utilizamos instâncias estáticas das componentes para acessar seus métodos globalmente.
+
+~~~java
+public static StateMachineController instance;
+
+public static Window instance
+
+public static IEffects instance
+~~~
+
+# Conclusões e Trabalhos Futuros
+
+> <Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.>
+
 
 ## Documentação dos Componentes
 
@@ -120,3 +145,17 @@ Interface agregadora do componente em Java:
 public interface IDataSet extends ITableProducer, IDataSetProperties {
 }
 ~~~
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+`<Resumo do papel da interface.>`
+
+~~~
+<Interface em Java.>
+~~~
+
+Método | Objetivo
+-------| --------
+`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
