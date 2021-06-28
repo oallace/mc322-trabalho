@@ -235,7 +235,7 @@ Classes do Componente:
 
 `Interface que permite informa mudanças de efeitos para a Máquina de Efeitos`
 
-~~~
+~~~java
 public interface IManageEffects {
 
     public boolean freezeSquare(int iPos, int jPos);
@@ -257,7 +257,7 @@ Método | Objetivo
 
 `Interface que permite perguntas para a Máquina de Efeitos`
 
-~~~
+~~~java
 public interface IAskEffects
 {
     public boolean isFrozen(int iPos, int jPos);
@@ -279,7 +279,7 @@ Método | Objetivo
 
 `Interface que permite o gerenciamento da representação gráfica do jogo.`
 
-~~~
+~~~java
 public interface IManageRepresentation 
 {
     public void actualizeSquareRepresentation(int iPos, int jPos, boolean attPiece);
@@ -289,3 +289,78 @@ public interface IManageRepresentation
 Método | Objetivo
 -------| --------
 `actualizeRepresentation` | `Solicita a atualização da representação de um Square.`
+
+
+### Interface `IOperateChess`
+
+`Interface que permite o gerenciamento do xadrez. Através dela que solicitamos movimentações e execução de poderes`
+
+~~~java
+public interface IOperateChess {
+    public void setSelectedHighlight(int iPos, int jPos);
+
+    public void setSelectedPiecePosition(int [] position);
+
+    public void changeToPieceMovementState();
+
+    public void  changeToPieceSelectionState();
+
+    public void changeToMoveSelectionState();
+
+    public void changeToBasicSkillSelectionState();
+
+    public void changeToMainSkillSelectionState();
+
+    public void requestSkill(int iTarget, int jTarget);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`setSelectedHighlight` | `Informa qual foi o highlight escolhido.`
+`setSelectedPiecePosition` | `Informa a posição da peça selecionada pelo jogador.`
+`changeToPieceMovementState` | `Muda para o estado de movimentação de peça.`
+`changeToPieceSelectionState` | `Muda para o estado de seleção de peça.`
+`changeToMoveSelectionState` | `Muda para o estado de seleção de movimento.`
+`changeToBasicSkillSelectionState` | `Muda para o estado de seleção de Habilidade Básica.`
+`changeToMainSkillSelectionState` | `Muda para o estado de seleção de Habilidade Principal`
+`requestSkill` | `Solicita a execução de uma habilidade.`
+
+### Interface `IAskChess`
+
+`Interface que permite perguntas sobre o estado do jogo.`
+
+~~~java
+public interface IAskChess {
+    public String getPlayerName(int playerNum);
+
+    public String getPieceName(int iPos, int jPos);
+
+    public boolean squareIsHighlighted(int iPos, int jPos);
+
+    public boolean thereIsPiece(int iPos, int jPos);
+
+    public  boolean isPieceSelectionState();
+
+    public  boolean isMoveSelectionState();
+
+    public boolean isSkillSelectionState();
+
+    public int[] getSelectedPiecePosition();
+
+    public boolean isCurrentPlayerPiece(int iPos, int jPos);
+}
+
+~~~
+
+Método | Objetivo
+-------| --------
+`getPlayerName` | `Solicita o nome do jogador.`
+`getPieceName` | `Solicita o nome da peça sem uma posição.`
+`squareIsHighlighted` | `Pergunta se uma posição possui highlight.`
+`thereIsPiece` | `Pergunta se em uma posição há peça.`
+`isPieceSelectionState` | `Pergunta se está em estado de Seleção de Peça.`
+`isMoveSelectionState` | `Pergunta se está em estado de Seleção de Movimento.`
+`isSkillSelectionState` | `Pergunta se está em estado de Seleção de Habilidade`
+`getSelectedPiecePosition` | `Pergunta a posição da Peça que foi selecionada.`
+`isCurrentPlayerPiece` | `Pergunta se a peça em uma dada posição pertence ao jogador atual`
