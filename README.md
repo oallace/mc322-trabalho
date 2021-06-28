@@ -47,7 +47,7 @@ Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que po
 
 # Vídeos do Projeto
 ## ![Vídeo da prévia](./assets/about/preview_video.mkv)
-## ![Vídeo final](./assests/about/final_video.mp4)
+## ![Vídeo final](./assets/about/final_video.mp4)
 
 # Slides do Projeto
 ## ![Slides da prévia](./assets/about/preview_slides.pdf)
