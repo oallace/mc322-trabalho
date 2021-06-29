@@ -46,8 +46,8 @@ Cada nação terá uma *Habilidade Básica* e uma *Habilidade Principal*, que po
 * Wallace Gustavo Santos Lima - RA 195512
 
 # Vídeos do Projeto
-## ![Vídeo da prévia](./assets/about/preview_video.mkv)
-## ![Vídeo final](./assets/about/final_video.mp4)
+## ![Vídeo da prévia](https://drive.google.com/file/d/1LpzFHsy_D6vnhZ9zT7xylBbVeS3-68eM/view?usp=sharing)
+## ![Vídeo final](https://drive.google.com/file/d/1UDCN5RkElN7IPVMPfNE_DPqkRTixc6Y9/view?usp=sharing)
 
 # Slides do Projeto
 ## ![Slides da prévia](./assets/about/preview_slides.pdf)
